@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Responsive Quiz with Jokes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: #f5f5f5;
+    }
+
+    .container {
+      max-width: 600px;
+      width: 90%;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h1, h2 {
+      text-align: center;
+    }
+
+    .question {
+      margin-bottom: 20px;
+    }
+
+    .answers button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .answers button:hover {
+      background: #0056b3;
+    }
+
+    #joke {
+      margin-top: 20px;
+      font-style: italic;
+      text-align: center;
+      color: #333;
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        padding: 15px;
+      }
+      .answers button {
+        font-size: 14px;
+        padding: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Quick Quiz</h1>
+    <div class="question" id="question">What is 2 + 2?</div>
+    <div class="answers">
+      <button onclick="checkAnswer(3)">3</button>
+      <button onclick="checkAnswer(4)">4</button>
+      <button onclick="checkAnswer(5)">5</button>
+      <button onclick="checkAnswer(6)">6</button>
+    </div>
+    <h2>Tech Joke of the Day</h2>
+    <div id="joke">Loading...</div>
+  </div>
+
+  <script>
+    function checkAnswer(answer) {
+      const correct = 4;
+      if (answer === correct) {
+        alert("Correct Answer!");
+      } else {
+        alert("Wrong Answer. Try Again!");
+      }
+    }
+
+    async function fetchJoke() {
+      try {
+        const res = await fetch("https://v2.jokeapi.dev/joke/Programming?type=single");
+        const data = await res.json();
+        document.getElementById("joke").innerText = data.joke || "No joke found.";
+      } catch (err) {
+        document.getElementById("joke").innerText = "Failed to load joke.";
+      }
+    }
+
+    fetchJoke();
+  </script>
+</body>
+</html>
